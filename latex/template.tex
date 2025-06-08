@@ -1,11 +1,35 @@
-\documentclass[12pt]{book}
+\documentclass[12pt, oneside]{book}
 
 \usepackage{multicol}
-\usepackage[margin=2cm]{geometry}	% sistemare meglio i margini
+\usepackage[a4paper, margin=2cm]{geometry}
 \usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{subfiles}
+\usepackage{tabularx} % nel preambolo
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\usepackage{adjustbox}
 
 % Pacchetti di prova
 \usepackage{lipsum}
+\usepackage{titlesec}
+
+% Definiamo una macro per memorizzare il titolo della parte
+\newcommand{\parttitle}{}
+
+% Ridefiniamo \part per salvare il titolo in \parttitle
+\let\oldpart\part
+\renewcommand{\part}[1]{%
+  \def\parttitle{#1}%
+  \oldpart{#1}%
+}
+
+
+\newcommand{\ricetta}[1]{\addcontentsline{toc}{section}{#1}\begin{tabularx}{1\linewidth}{Y Y Y}
+ & {\Large \textsc{\parttitle}} &  \\ \hline \hline \\
+ & \makebox[\linewidth][c]{{\LARGE \textsc{#1}}} \\ &  \\ \hline \hline
+\end{tabularx}}
+
 
 \begin{document}
 
@@ -14,29 +38,20 @@
 \date{}
 
 \maketitle
+\tableofcontents
+\part{Dolci}
 
-\part*{Dolci}
+%\addcontentsline{toc}{section}{Pasta frolla}
+\subfile{parts/dolci/frolla}
 
-\chapter*{Pasta frolla}
+\addcontentsline{toc}{section}{Crostata}
+\subfile{parts/dolci/crostata_marmellata}
 
-\noindent
-\begin{minipage}[!t]{0.3\textwidth}
-    \includegraphics[width=\linewidth]{images/test.jpg}\\  % Più grande
-    \textbf{Ingredienti}
-    \begin{itemize}
-        \item Ingrediente 1
-        \item Ingrediente 2
-        \item Ingrediente 3
-        \item Ingrediente 4
-        \item Ingrediente 5
-        \item Ingrediente 6
-    \end{itemize}
-\end{minipage}%
-\hfill
-\begin{minipage}[!t]{0.65\textwidth}
-    \section*{Procedimento}
-    \lipsum[1]  % Testo fittizio
-\end{minipage}
-Note\\	% mettere in fondo alla pagina
-\lipsum[2]
+\newpage
+
+\ricetta{Crostata alla Marmellata}
+
+
+
+
 \end{document}
