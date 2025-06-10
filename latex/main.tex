@@ -1,0 +1,60 @@
+\documentclass[12pt, oneside]{book}
+
+% Importing package for document
+\usepackage[a4paper, margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{tabularx}	% for title formatting
+\usepackage[export]{adjustbox}	% for centering long text in tabularx
+\usepackage{titlesec}	% for get part title
+\usepackage{palatino}	% setting font type
+\usepackage{pifont}		% for bullet style
+\usepackage{enumitem}
+
+% To set page number at the bottom
+\pagestyle{plain}
+
+% Define column type with centered text
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+% Modify \part style and text
+\titleformat{\part}[display]
+  {\normalfont\Huge\scshape\centering} % usa \scshape per textsc
+  {Parte \thepart}{20pt}{}
+
+% Define parttitle command to get the actual part name 
+\newcommand{\parttitle}{}
+\let\oldpart\part
+\renewcommand{\part}[1]{%
+  \def\parttitle{#1}%
+  \oldpart{#1}%
+}
+
+% Modify \tableofcontents font style
+\renewcommand{\contentsname}{\textsc{Indice}}
+
+% Define command to get the recipe title
+\newcommand{\recipetitle}[1]{
+\addcontentsline{toc}{section}{#1}
+\begin{tabularx}{1\linewidth}{Y Y Y}
+ & {\Large \textsc{\parttitle}} &  \\ \hline \hline \\
+ & \makebox[\linewidth][c]{{\LARGE \textsc{#1}}} \\ &  \\ \hline \hline
+\end{tabularx}
+}
+
+
+\begin{document}
+
+\title{\textsc{Raccolta di Ricette}}
+\author{A. Cattafesta, C. Selicato}
+\date{}
+
+\maketitle
+\tableofcontents
+
+\part{Dolci}
+
+\input{blank_template}
+
+
+
+\end{document}

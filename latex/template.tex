@@ -7,7 +7,11 @@
 \usepackage{subfiles}
 \usepackage{tabularx} % nel preambolo
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
+\usepackage{pifont}
+\usepackage{enumitem}
+\usepackage{xparse}
 
+\usepackage{palatino}
 \usepackage{adjustbox}
 
 % Pacchetti di prova
@@ -24,13 +28,81 @@
   \oldpart{#1}%
 }
 
-
-\newcommand{\ricetta}[1]{\addcontentsline{toc}{section}{#1}\begin{tabularx}{1\linewidth}{Y Y Y}
+% Comandi personalizzati per le ricette
+\newcommand{\ricetta}[1]{
+\addcontentsline{toc}{section}{#1}
+\begin{tabularx}{1\linewidth}{Y Y Y}
  & {\Large \textsc{\parttitle}} &  \\ \hline \hline \\
  & \makebox[\linewidth][c]{{\LARGE \textsc{#1}}} \\ &  \\ \hline \hline
-\end{tabularx}}
+\end{tabularx}
+}	% Crea l'intestazione di pagina con il nome della parte e della ricetta
 
 
+%\NewDocumentCommand{\ingredienti}{>{\SplitList{,}}m}{
+%    \begin{minipage}[t]{0.3\textwidth}
+%        \includegraphics[valign=t, width=\linewidth]{images/test.jpg}
+%        \vspace{0.5em}
+%
+%        \begin{tabularx}{\linewidth}{X}
+%        {\Large \textsc{Ingredienti}} \\ \hline \hline
+%        \end{tabularx}
+%
+%        \begin{itemize}[label={\ding{112}}, left=0pt]
+%			\ProcessList{#1}{\item ##1}
+%        \end{itemize}
+%    \end{minipage}%
+%    \hfill
+%}
+
+
+\ExplSyntaxOn
+
+\NewDocumentCommand{\ingredienti}{m}
+{
+    \begin{minipage}[t]{0.3\textwidth}
+        \includegraphics[valign=t, width=\linewidth]{images/test.jpg}
+        \vspace{0.5em}
+
+        \begin{tabularx}{\linewidth}{X}
+        {\Large \textsc{Ingredienti}} \\ \hline \hline
+        \end{tabularx}
+
+        \begin{itemize}[label={\ding{112}}, left=0pt]
+            \seq_set_split:Nnn \l_tmpa_seq { , } { #1 }
+            \seq_map_inline:Nn \l_tmpa_seq { \item ##1 }
+        \end{itemize}
+    \end{minipage}%
+    \hfill
+}
+\ExplSyntaxOff
+
+\newcommand{\procedimento}[1]{
+    \begin{minipage}[t]{0.65\textwidth}
+        \begin{tabularx}{\linewidth}{X}
+        \\
+        {\Large \textsc{Procedimento}} \\ \hline \hline \\
+        \end{tabularx}
+		#1
+    \end{minipage}
+}
+
+\newcommand{\note}[1]{
+    \vspace*{\fill}
+
+    \begin{tabularx}{\linewidth}{X}
+    {\Large \textsc{Note}} \\ \hline \hline \\
+    \end{tabularx}
+    #1
+}
+
+
+
+
+
+
+
+
+\pagestyle{plain}
 \begin{document}
 
 \title{Raccolta di Ricette}
@@ -41,15 +113,11 @@
 \tableofcontents
 \part{Dolci}
 
-%\addcontentsline{toc}{section}{Pasta frolla}
-\subfile{parts/dolci/frolla}
 
-\addcontentsline{toc}{section}{Crostata}
+\subfile{parts/dolci/frolla}
+\newpage
 \subfile{parts/dolci/crostata_marmellata}
 
-\newpage
-
-\ricetta{Crostata alla Marmellata}
 
 
 
