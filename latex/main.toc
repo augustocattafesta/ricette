@@ -1,2 +1,5 @@
 \contentsline {part}{I\hspace {1em}Dolci}{2}{}%
-\contentsline {section}{Titolo}{3}{}%
+\contentsline {section}{Pasta Frolla}{3}{}%
+\contentsline {section}{Cheesecake}{4}{}%
+\contentsline {section}{Torta 4 Dicembre}{5}{}%
+\contentsline {section}{Plumcake}{6}{}%
